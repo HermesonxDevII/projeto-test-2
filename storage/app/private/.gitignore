@@ -1,0 +1,4 @@
+*
+private/
+!.gitignore
+!public/default.png

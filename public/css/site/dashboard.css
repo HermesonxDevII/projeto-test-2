@@ -1,0 +1,125 @@
+/* Dashboard cards */
+@media (min-width:1140px) and (max-width:1392px) {
+    .dashboard-card img {
+        width: 30px !important;
+    }
+}
+
+@media (min-width:991px) and (max-width:1139px) {
+    .dashboard-card {
+
+        padding: 15px;
+    }
+
+    .dashboard-card img {
+        width: 35px !important;
+    }
+
+    .dashboard-card div {
+        margin-left: 10px !important;
+    }
+}
+
+/* Student dashboard */
+.dashboard-banner {
+    width: 100%;
+}
+
+.card-background {
+    background-color: var(--bg-purple);
+}
+
+.course-card {
+    box-shadow: 0px 10px 10px rgba(23, 108, 130, 0.08);
+}
+
+.course-card-body {
+    padding: 0px 20px !important;
+}
+
+.course-card-body img {
+    position: absolute;
+    width: 100px !important;
+    height: 100px;
+    top: 10px;
+    right: 10px;
+}
+
+.card-course-name {
+    position: absolute;
+    top: 110px;
+    left: 22px;
+    font-size: 18px;
+    font-weight: bolder;
+    color: white;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 182px;
+}
+
+.card-course-teacher {
+    background: white;
+    color: black;
+    border-radius: 50px;
+    padding: 5px 10px;
+    font-weight: 100;
+    width: 58%;
+    position: absolute;
+    top: 140px;
+    left: 15px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    font-size: 10px;
+}
+
+.course-cover {
+    background-color: var(--bg-purple);
+    background-image: url('../../images/course-cover.svg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    min-width: 180px;
+    border-radius: 10px;
+    height: 184px;
+}
+
+/* Owl-carousel override */
+.owl-prev {
+    position: absolute;
+    left: -35px;
+    top: 100px;
+    font-size: 40px !important;
+
+}
+
+.owl-next {
+    position: absolute;
+    right: -35px;
+    top: 100px;
+    font-size: 40px !important;
+}
+
+.owl-dots {
+    display: flex;
+    justify-content: start !important;
+    padding-left: 10px;
+}
+
+.owl-prev:hover,
+.owl-next:hover {
+    background: rgba(0, 0, 0, 0.226) !important;
+}
+
+.owl-prev span:hover,
+.owl-next span:hover {
+    color: rgb(58, 58, 58) !important;
+
+}
+.course-item {
+    /* max-width: 235px !important; */
+}
+
+.owl-nav.disabled, .owl-dots {
+    display:block !important;
+}

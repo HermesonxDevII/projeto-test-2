@@ -1,0 +1,65 @@
+.title {
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 32px;
+    margin-bottom: 53px
+}
+
+.logo {
+    margin-bottom: 156px;
+}
+
+.modal-body {
+    padding: 0px !important;
+}
+
+.student-avatar {
+    width: 109px !important;
+    height: 109px !important;
+    border-radius: 15px;
+    margin-left: 41px;
+    margin-right: 41px !important;
+}
+
+.student {
+    padding-top: 22px;
+    border: solid 2px transparent;
+}
+
+.student:hover {
+    border: 2px solid var(--bg-primary);
+    border-radius: 14px;
+    cursor: pointer;
+}
+
+.footer-text {
+    text-align: center;
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.choose-student-footer {
+    text-align: center;
+    margin-bottom:20px;
+}
+
+
+.choose-student-screen {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+
+/* Media queries */
+/* Mobile */
+@media (max-width: 575px) {
+    .logo {
+        margin:10px !important;
+    }
+    .title {
+        margin: 0px !important;
+    }
+}

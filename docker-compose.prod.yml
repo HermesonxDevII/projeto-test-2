@@ -1,0 +1,52 @@
+version: "3.7"
+
+services:
+    # image project
+    app:
+        container_name: smartlead-app
+        build:
+            context: .
+            dockerfile: Dockerfile
+        image: smartlead/app
+        restart: always
+        working_dir: /var/www/
+        volumes:
+            - ./:/var/www
+            - "./uploads.ini:/usr/local/etc/php/conf.d/uploads.ini"
+            - "/etc/timezone:/etc/timezone:ro"
+            - "/etc/localtime:/etc/localtime:ro"
+        networks:
+            - smartlead
+
+    # nginx
+    nginx:
+        container_name: app-nginx
+        image: nginx:alpine
+        restart: always
+        ports:
+            - "80:80"
+        volumes:
+            - ./:/var/www
+            - ./docker/nginx/:/etc/nginx/conf.d/
+            - "./uploads.ini:/usr/local/etc/php/conf.d/uploads.ini"
+            - "/etc/timezone:/etc/timezone:ro"
+            - "/etc/localtime:/etc/localtime:ro"
+        networks:
+            - smartlead
+
+    cron:
+        build:
+            context: .
+            dockerfile: cron.dockerfile
+        container_name: cron
+        restart: always
+        volumes:
+            - ./:/var/www
+            - "/etc/timezone:/etc/timezone:ro"
+            - "/etc/localtime:/etc/localtime:ro"
+        networks:
+            - smartlead
+
+networks:
+    smartlead:
+        driver: bridge

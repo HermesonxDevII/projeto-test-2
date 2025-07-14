@@ -1,0 +1,7 @@
+*
+public/thumbnails
+!.gitignore
+!default_thumbnail.png
+
+
+
