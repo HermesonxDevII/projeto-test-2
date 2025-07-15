@@ -1,7 +1,7 @@
 <?php
 
 use App\Events\CourseStartNotification;
-use Illuminate\Support\Facades\{Route, Auth};
+use Illuminate\Support\Facades\{ Route, Auth };
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\{
     HomeController,
@@ -101,7 +101,8 @@ Route::group(['middleware' => ['auth', 'locale']], function () {
     });
     Route::resource('users', UserController::class);
 
-    Route::resource('chats',ChatsController::class);
+    Route::get('chats', [ChatsController::class, 'index'])->name('chats.index');
+    Route::get('chats/{id}', [ChatsController::class, 'show'])->name('chats.show');
 
     Route::resource('evaluationModels', EvaluationModelController::class);
 
@@ -210,7 +211,7 @@ Route::group(['middleware' => ['auth', 'locale']], function () {
             return response()->json($roles);
         })->name('session.getUserRoleId');
         Route::get('/getUserId', function () {
-            return response()->json(session()->get('user_id'));
+            return response()->json(Auth::user()->id);
         })->name('session.getUserId');
     });
 

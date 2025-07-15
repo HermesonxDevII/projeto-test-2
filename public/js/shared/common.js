@@ -1,15 +1,24 @@
+/* eslint-disable */
+
+// Global AJAX Setup
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+
+// UI Utility Functions
 function loading() {
     $('#loading_modal').modal('toggle');
 }
 
-$('.expand-profile, .expand-profile-mobile').click(function (e) {
-    $(this).find('i').toggleClass('fa-angle-down').toggleClass('fa-angle-up');
+$('.expand-profile, .expand-profile-mobile').on('click', function () {
+    $(this).find('i').toggleClass('fa-angle-down fa-angle-up');
     $('.data-collapse').slideToggle('slow');
 });
 
 function showAlertModal(message) {
-    let modal = $('#alert_modal');
-
+    const modal = $('#alert_modal');
     if (isValidVariable(message)) {
         modal.find('#message').text(message);
         modal.modal('show');
@@ -17,17 +26,13 @@ function showAlertModal(message) {
 }
 
 function bytesToSize(bytes) {
-    let sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
-    if (bytes == 0) {
+    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+    if (bytes === 0) {
         return 'n/a';
     }
-
-    let i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
-    if (i == 0) {
-        return bytes + ' ' + sizes[i];
-    }
+    const i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
     return (bytes / Math.pow(1024, i)).toFixed(1) + ' ' + sizes[i];
-};
+}
 
 function initialUpper(text) {
     return text.charAt(0).toUpperCase() + text.slice(1);
@@ -38,24 +43,110 @@ function select2Setup() {
 }
 
 function copyElementText(elementId) {
-    let range = document.createRange();
+    const range = document.createRange();
     range.selectNode(document.getElementById(elementId));
     window.getSelection().removeAllRanges();
     window.getSelection().addRange(range);
     document.execCommand("copy");
     window.getSelection().removeAllRanges();
-};
+}
+
+function closeAllModals() {
+    $('.modal').each(function (_index, value) {
+        $(value).modal('hide');
+    });
+}
+
+const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer);
+        toast.addEventListener('mouseleave', Swal.resumeTimer);
+    }
+});
+
+function notify(message = '', status = 'success') {
+    Toast.fire({
+        icon: status,
+        title: message
+    });
+}
+
+function formatIframe(iframeCode) {
+    const iframe = $(`<div>${iframeCode}</div>`).find('iframe');
+    if (iframe.length === 0) {
+        return false;
+    }
+    return iframe.get(0).outerHTML;
+}
+
+function isHTML(str) {
+    const a = document.createElement('div');
+    a.innerHTML = str;
+    for (let c = a.childNodes, i = c.length; i--;) {
+        if (c[i].nodeType === 1) return true;
+    }
+    return false;
+}
+
+function validateHTML(html) {
+    if (!isHTML(html)) {
+        return false;
+    }
+    const doc = document.createElement('div');
+    doc.innerHTML = html;
+    return (doc.innerHTML === html);
+}
+
+// Student & Session Related Functions
+let user_role, user_id, student;
+
+function getUserRole() {
+    $.ajax({
+        url: `/session/getUserRole`,
+        async: false,
+        type: 'GET',
+        success: (response) => {
+            user_role = response;
+        }
+    });
+}
+
+function getUserId() {
+    $.ajax({
+        url: `/session/getUserId`,
+        async: false,
+        type: 'GET',
+        success: (response) => {
+            user_id = response;
+        }
+    });
+}
+
+function getStudent() {
+    $.ajax({
+        url: `/session/getStudent`,
+        async: false,
+        type: 'GET',
+        success: (response) => {
+            student = response;
+        }
+    });
+}
 
 function chooseStudent() {
     $.ajax({
         url: `/users/getStudents`,
         type: 'GET',
         success: function (response) {
-            let students = $('#choose_student_modal .modal-body .students');
-
-            students.html('');
+            const studentsContainer = $('#choose_student_modal .modal-body .students');
+            studentsContainer.html('');
             response.forEach(element => {
-                students.append(`
+                studentsContainer.append(`
                     <div class="col-5 row text-center justify-content-center student"
                         id="student-${element.id}" onclick="">
                         <img src="/images/avatars/avatar${element.avatar_id}.svg" class="student-avatar"
@@ -67,150 +158,32 @@ function chooseStudent() {
                     </div>
                 `);
             });
-
             $('#choose_student_modal').modal('show');
         }
     });
 }
 
-function closeAllModals() {
-    $('.modal').each(function (index, value) {
-        $(value).modal('hide');
-    });
-}
-
-var Toast = Swal.mixin({
-    toast: true,
-    position: 'top-end',
-    showConfirmButton: false,
-    timer: 3000,
-    timerProgressBar: true,
-    didOpen: (toast) => {
-        toast.addEventListener('mouseenter', Swal.stopTimer)
-        toast.addEventListener('mouseleave', Swal.resumeTimer)
-    }
-});
-
-// FUNCTIONS TO GET SESSION VALUES
-var user_role, user_id, student;
-
-function getUserRole() {
-    let that = this;
-
-    $.ajax({
-        url: `/session/getUserRole`,
-        async: false,
-        type: 'GET',
-        success: function (response) {
-            that.user_role = response;
-        }
-    });
-}
-
-function getUserId() {
-    let that = this;
-
-    $.ajax({
-        url: `/session/getUserId`,
-        async: false,
-        type: 'GET',
-        success: function (response) {
-            that.user_id = response;
-        }
-    });
-}
-
-function getStudent() {
-    let that = this;
-
-    $.ajax({
-        url: `/session/getStudent`,
-        async: false,
-        type: 'GET',
-        success: function (response) {
-            that.student = response;
-        }
-    });
-}
-
-$('document').ready(function () {
-    showRecentNotifications();
-    showNotificationsCounter();
-});
-
-$(function () {
-    $('[data-toggle="tooltip"]').tooltip();
-});
-
-$(function () {
-    $('[data-toggle="popover"]').popover();
-});
-
-moment.locale('pt-br');
-
-function formatIframe(iframeCode) {
-    // Pick only iframe tag, forget all unnecessary extra HTML (ex: generated by Vimeo)
-    let iframe = $(`<div>${iframeCode}</div>`).find('iframe');
-
-    if (iframe.length == 0) {
-        return false;
-    }
-
-    return iframe.get(0).outerHTML;
-}
-
-function notify(message = '', status = 'success') {
-    Toast.fire({
-        icon: status,
-        title: message
-    });
-}
-
-function isHTML(str) {
-    var a = document.createElement('div');
-    a.innerHTML = str;
-
-    for (var c = a.childNodes, i = c.length; i--; ) {
-      if (c[i].nodeType == 1) return true;
-    }
-
-    return false;
-}
-
-function validateHTML(html) {
-    if(!isHTML(html)) {
-        return false;
-    }
-    let doc = document.createElement('div');
-    doc.innerHTML = html;
-    return ( doc.innerHTML === html );
-}
-
-var recentNotifications = [];
+// Notifications
+let recentNotifications = [];
 
 function subscribeToCourses() {
     $.ajax({
         type: 'GET',
         headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
         url: `/students/getCoursesOfSelectedStudent`,
-        success: function(response) {
-
+        success: function (response) {
             response.map(course => {
                 pusher.subscribe(`course-${course.id}-notifications`);
             });
 
-            var callback = (data) => {
+            const callback = (data) => {
                 localStorage.setItem('is-read-notifications', 0);
+                const notificationExists = recentNotifications.filter(obj => data.id === obj.id);
 
-                let notificationExists = recentNotifications.filter(function(obj) {
-                    return data.id == obj.id;
-                });
-
-                if(notificationExists.length == 0) {
+                if (notificationExists.length === 0) {
                     recentNotifications.push(data);
                 }
 
-                console.log(data);
                 localStorage.setItem('recent-notifications', JSON.stringify(recentNotifications));
                 showNotificationsCounter();
                 showRecentNotifications();
@@ -218,37 +191,35 @@ function subscribeToCourses() {
 
             pusher.bind('App\\Events\\CourseStartNotification', callback);
         },
-        error: function(error) {
+        error: function () {
             showAlertModal('Houve um erro ao configurar as notificações.');
         }
     });
 }
 
 function unsubscribeFromCourses() {
-    return new Promise ((resolve) => {
+    return new Promise((resolve) => {
         $.ajax({
             type: 'GET',
             headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
             url: `/students/getCoursesOfSelectedStudent`,
-            success: function(response) {
+            success: function (response) {
                 response.map(course => {
-                    console.log('unsubscribing from ' + `course-${course.id}-notifications` )
                     pusher.unsubscribe(`course-${course.id}-notifications`);
                 });
                 localStorage.clear();
                 resolve(response);
             },
-            error: function(error) {
+            error: function () {
                 showAlertModal('Houve um erro ao configurar as notificações.');
             }
         });
-    })
+    });
 }
 
-
 function getWeeklyNotificationsByStudentSelected(course_type) {
-    let notificacoes = $('.notification-list'),
-        bubbleCounter = $('#notification-counter');
+    const notificacoes = $('.notification-list');
+    const bubbleCounter = $('#notification-counter');
 
     $('#notification-dropdown').toggleClass('d-none');
     bubbleCounter.addClass('d-none');
@@ -260,10 +231,10 @@ function getWeeklyNotificationsByStudentSelected(course_type) {
         type: 'GET',
         headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
         url: `/students/getWeeklyNotificationsByStudentSelected/${course_type}`,
-        beforeSend: function() {
-            notificacoes.html('<img class="notification-loading" src="images/loading.svg"/>');
+        beforeSend: function () {
+            notificacoes.html('<img class="notification-loading" src="images/loading.svg" alt="Loading"/>');
         },
-        success: function(response) {
+        success: function (response) {
             notificacoes.html('');
             response.map(course => {
                 notificacoes.append(`
@@ -273,12 +244,12 @@ function getWeeklyNotificationsByStudentSelected(course_type) {
                         <p>${course.message}</p>
                     </div>
                 `);
-            })
-            if(response.length == 0) {
+            });
+            if (response.length === 0) {
                 notificacoes.html('<p class="pt-4 m-2">Sem notificações.</p>');
             }
         },
-        error: function(error) {
+        error: function () {
             showAlertModal('Houve um erro ao carregar as notificações.');
         }
     });
@@ -288,29 +259,47 @@ function getRecentNotifications() {
     return JSON.parse(localStorage.getItem('recent-notifications') ?? '[]');
 }
 
+function isReadNotifications() {
+    const isRead = localStorage.getItem('is-read-notifications');
+    return parseInt(isRead ?? 1);
+}
+
+function showNotificationsCounter() {
+    const currentRecentNotifications = getRecentNotifications();
+    const bubbleCounter = $('#notification-counter');
+
+    if (!isReadNotifications()) {
+        bubbleCounter.removeClass('d-none');
+        bubbleCounter.text(currentRecentNotifications.length <= 9 ? currentRecentNotifications.length : '9+');
+    }
+
+    if (currentRecentNotifications.length === 0) {
+        bubbleCounter.addClass('d-none');
+    }
+}
+
 function showRecentNotifications() {
-    let notifications = getRecentNotifications();
+    const notifications = getRecentNotifications();
 
-    if(notifications != null) {
-        notifications.forEach(function (notification, index) {
-            if (notification != null) {
-                let hasNotification = $('#courses-notifications').find(`#course-${notification.id}-start-notification`);
+    if (notifications !== null) {
+        notifications.forEach(function (notification) {
+            if (notification !== null) {
+                const hasNotification = $('#courses-notifications').find(`#course-${notification.id}-start-notification`);
 
-                if (hasNotification.length == 0) {
+                if (hasNotification.length === 0) {
                     $('#courses-notifications').append(`
                         <div class="alert alert-warning alert-dismissible fade show live-alert" role="alert"
                             id="course-${notification.id}-start-notification">
-                            <img src="/images/live-badge.svg" alt="Live Icon Badge">
+                            <img src="{{ asset('images/live-badge.svg') }}" alt="Live Icon Badge">
                             Sua aula ao vivo <b>${notification.name}</b> vai começar em breve.
-                            <a href="${notification.link}" target="_blank" class="${notification.link == null ? 'd-none' : ''}">Assistir aula</a>
+                            <a href="${notification.link}" target="_blank" class="${notification.link === null ? 'd-none' : ''}">Assistir aula</a>
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"
                             onclick="removeCourseNotificationById(${notification.id})" >
                             </button>
                         </div>
                     `);
 
-                    // Delay of 10 minutes to remove notification (600000 miliseconds)
-                    $(`#course-${notification.id}-start-notification`).delay(600000).fadeOut(1000, function() {
+                    $(`#course-${notification.id}-start-notification`).delay(600000).fadeOut(1000, function () {
                         $(this).remove();
                         removeCourseNotificationById(notification.id);
                     });
@@ -318,27 +307,6 @@ function showRecentNotifications() {
             }
         });
     }
-
-}
-
-function isReadNotifications() {
-    let isRead = localStorage.getItem('is-read-notifications');
-    return parseInt(isRead ?? 1);
-}
-
-function showNotificationsCounter() {
-    let recentNotifications = getRecentNotifications(),
-        bubbleCounter = $('#notification-counter');
-
-    if (!isReadNotifications()) {
-        bubbleCounter.removeClass('d-none');
-        bubbleCounter.text(recentNotifications.length <= 9 ? recentNotifications.length : '9+');
-    }
-
-    if(recentNotifications.length == 0) {
-        bubbleCounter.addClass('d-none');
-    }
-
 }
 
 function removeAllRecentNotifications() {
@@ -346,177 +314,190 @@ function removeAllRecentNotifications() {
 }
 
 function removeCourseNotificationById(idCourse) {
-    let recentNotifications = getRecentNotifications();
-
-    recentNotifications.forEach(function (value, index) {
-        if (value.id == idCourse) {
-            recentNotifications.splice(index, 1);
-        }
-     });
-
-    localStorage.setItem('recent-notifications', JSON.stringify(recentNotifications));
+    let currentRecentNotifications = getRecentNotifications();
+    currentRecentNotifications = currentRecentNotifications.filter(value => value.id !== idCourse);
+    localStorage.setItem('recent-notifications', JSON.stringify(currentRecentNotifications));
     showNotificationsCounter();
 }
 
-$(document).on('click', '.logout-system', function(event){
-    event.preventDefault();
-    let modal = $('#logout_modal');
-    modal.modal('show');
-})
+const chatNotificationWrapper = document.getElementById('chat-notification-wrapper');
+const chatDropdown = document.getElementById('chat-dropdown');
+const chatMessageCounter = document.getElementById('chat-message-counter');
+const chatMessagesContainer = document.getElementById('chat-messages-container');
+const expandChatButton = document.getElementById('expand-chat-button');
+const viewAllChatsButton = document.getElementById('view-all-chats-button');
 
-$(document).on('click', '#logout_system_confirm', async function(){
+let chatPollingInterval;
+
+function getChatBaseUrl(includeApi = false) {
+    const hostname = window.location.hostname;
+    let baseUrl;
+
+    if (hostname === 'localhost') {
+        baseUrl = 'http://localhost:81';
+    } else if (hostname.includes('homolog')) {
+        baseUrl = 'https://chat-homolog.academy-meliseducation.com';
+    } else {
+        baseUrl = 'https://chat.academy-meliseducation.com';
+    }
+
+    return includeApi ? `${baseUrl}/api` : baseUrl;
+}
+
+function toggleChatDropdown() {
+    if (chatDropdown) {
+        chatDropdown.classList.toggle('d-none');
+        if (!chatDropdown.classList.contains('d-none')) {
+            fetchRecentMessages();
+            markAllConversationsAsRead();
+        }
+    }
+}
+
+function setupChatToggle() {
+    if (chatNotificationWrapper && chatDropdown) {
+        $(document).on('click', function (event) {
+            if (!$(event.target).closest('#chat-notification-wrapper').length &&
+                !$(event.target).closest('#chat-dropdown').length &&
+                !$('#chat-dropdown').hasClass('d-none')) {
+                $('#chat-dropdown').addClass('d-none');
+            }
+        });
+    }
+}
+
+async function fetchTotalUnreadMessages() {
+    try {
+        const chatBaseUrl = getChatBaseUrl(true);
+        const response = await fetch(`${chatBaseUrl}/integration-api/chat/total-unread-messages/${user_id}`);
+        const data = await response.json();
+        if (chatMessageCounter) {
+            if (data.total_unread > 0) {
+                chatMessageCounter.textContent = data.total_unread;
+                chatMessageCounter.classList.remove('d-none');
+            } else {
+                chatMessageCounter.classList.add('d-none');
+            }
+        }
+    } catch (error) {
+        console.error('Error fetching total unread messages:', error);
+    }
+}
+
+async function fetchRecentMessages() {
+    try {
+        const chatBaseUrl = getChatBaseUrl(true);
+        const response = await fetch(`${chatBaseUrl}/integration-api/chat/recent-messages-for-notifications/${user_id}`);
+        const data = await response.json();
+
+        if (chatMessagesContainer) {
+            chatMessagesContainer.innerHTML = '';
+            if (data.formatted_messages && data.formatted_messages.length > 0) {
+                data.formatted_messages.forEach(message => {
+                    const chatURL = `chats/${message.conversation_id}`;
+                    const chatItem = `
+                        <a href="${chatURL}" class="chat-item text-decoration-none">
+                            <div class="chat-content">
+                                <span class="chat-name">${message.conversation_name}</span>
+                                <p class="chat-last-message">${message.last_message}</p>
+                            </div>
+
+                            <div class="chat-meta">
+                                ${message.unread_count > 0
+                                    ? `<div class="chat-unread-count">${message.unread_count}</div>`
+                                    : ''
+                                }
+                                <span class="chat-time">${message.last_message_time}</span>
+                            </div>
+                        </a>
+                    `;
+                    chatMessagesContainer.innerHTML += chatItem;
+                });
+            } else {
+                chatMessagesContainer.innerHTML = '<p class="text-center text-muted">Sem mensagens recentes.</p>';
+            }
+        }
+    } catch (error) {
+        console.error('Error fetching recent messages:', error);
+    }
+}
+
+async function markConversationAsRead(conversationId) {
+    try {
+        const chatBaseUrl = getChatBaseUrl(true);
+        await fetch(`${chatBaseUrl}/integration-api/chat/${conversationId}/mark-as-read`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        fetchTotalUnreadMessages();
+    } catch (error) {
+        console.error(`Error marking conversation ${conversationId} as read:`, error);
+    }
+}
+
+async function markAllConversationsAsRead() {
+    try {
+        const chatBaseUrl = getChatBaseUrl(true);
+        const response = await fetch(`${chatBaseUrl}/integration-api/chat/recent-messages-for-notifications`);
+        const data = await response.json();
+        if (data.formatted_messages) {
+            for (const message of data.formatted_messages) {
+                if (message.unread_count > 0) {
+                    await markConversationAsRead(message.conversation_id);
+                }
+            }
+        }
+        fetchTotalUnreadMessages();
+    } catch (error) {
+        console.error('Error marking all conversations as read:', error);
+    }
+}
+
+function setupChatButtons() {
+    const chatBaseUrl = getChatBaseUrl();
+
+    if (expandChatButton) {
+        expandChatButton.addEventListener('click', function (e) {
+            e.preventDefault();
+            window.open(`${chatBaseUrl}/chats`);
+        });
+    }
+
+    if (viewAllChatsButton) {
+        viewAllChatsButton.addEventListener('click', function (e) {
+            e.preventDefault();
+            window.open(`${chatBaseUrl}/chats`);
+        });
+    }
+}
+
+$(document).on('click', '.logout-system', function (event) {
+    event.preventDefault();
+    $('#logout_modal').modal('show');
+});
+
+$(document).on('click', '#logout_system_confirm', async function () {
     $(this).attr('disabled', true);
     await unsubscribeFromCourses();
     $('#logout-form').submit();
-})
+});
 
-var recentChatMessages = []; // Para armazenar as mensagens do chat em localStorage
+$(function () {
+    $('[data-toggle="tooltip"]').tooltip();
+    $('[data-toggle="popover"]').popover();
+    moment.locale('pt-br');
+});
 
-function getChatMessages() {
-    // Esta função simulará a obtenção de mensagens do chat
-    // Em um ambiente real, você faria uma requisição AJAX para uma rota específica
-    // para buscar as mensagens do chat do banco de dados.
-    console.log("Fetching chat messages...");
+$(document).ready(function () {
+    getUserId();
+    setupChatToggle();
+    setupChatButtons();
+    fetchTotalUnreadMessages();
+    chatPollingInterval = setInterval(fetchTotalUnreadMessages, 30000);
 
-    // Simulação de dados de chat
-    const simulatedChatData = [
-        {
-            id: 1,
-            sender: "Professor Alex",
-            message: "Você fez um excelente trabalho",
-            time: "9h",
-            unread: 2,
-        },
-        {
-            id: 2,
-            sender: "Turma nº1",
-            message: "Letícia: Essa é a última mensagem do",
-            time: "10h",
-            unread: 2,
-        },
-        {
-            id: 3,
-            sender: "Turma nº2",
-            message: "Nome: Essa é a última mensagem do",
-            time: "11h",
-            unread: 2,
-        },
-        {
-            id: 4,
-            sender: "Turma nº3",
-            message: "Cleber: Essa é a última mensagem do chat que está...",
-            time: "1d",
-            unread: 2,
-        },
-    ];
-
-    return new Promise((resolve) => {
-        setTimeout(() => { // Simula um atraso de rede
-            resolve(simulatedChatData);
-        }, 500);
-    });
-}
-
-function showChatMessages() {
-    let chatList = $('.chat-list'),
-        bubbleCounter = $('#chat-message-counter');
-
-    // Alternar a visibilidade do dropdown
-    $('#chat-dropdown').toggleClass('d-none');
-
-    // Marcar mensagens como lidas e ocultar o contador ao abrir o chat
-    bubbleCounter.addClass('d-none');
-    bubbleCounter.text(0);
-    localStorage.setItem('is-read-chat-messages', 1);
-
-    // Se o dropdown for aberto, busque e exiba as mensagens
-    if (!$('#chat-dropdown').hasClass('d-none')) {
-        chatList.html('<img class="notification-loading" src="images/loading.svg"/>'); // Mostrar loader
-
-        getChatMessages().then(messages => {
-            chatList.html(''); // Limpar loader
-
-            if (messages.length === 0) {
-                chatList.html('<p class="pt-4 m-2">Sem mensagens.</p>');
-            } else {
-                messages.forEach(chat => {
-                    chatList.append(`
-                        <div class="chat-item d-flex align-items-center py-2 px-3 mb-2" style="background-color: #f7f7f7; border-radius: 8px; position: relative;">
-                            <div class="flex-grow-1">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <span class="fw-bold">${chat.sender}</span>
-                                    <span class="text-muted" style="font-size: 0.8em;">${chat.time}</span>
-                                </div>
-                                <p class="text-truncate m-0" style="font-size: 0.9em;">${chat.message}</p>
-                            </div>
-                            <span class="badge rounded-pill bg-danger ms-2" style="font-size: 0.7em;">${chat.unread}</span>
-                        </div>
-                    `);
-                });
-            }
-        }).catch(error => {
-            showAlertModal('Houve um erro ao carregar as mensagens do chat.');
-        });
-    }
-}
-
-function getRecentChatMessages() {
-    return JSON.parse(localStorage.getItem('recent-chat-messages') ?? '[]');
-}
-
-function isReadChatMessages() {
-    let isRead = localStorage.getItem('is-read-chat-messages');
-    return parseInt(isRead ?? 1); // Por padrão, considera como lido
-}
-
-function showChatMessagesCounter() {
-    let recentMessages = getRecentChatMessages(),
-        bubbleCounter = $('#chat-message-counter');
-
-    if (!isReadChatMessages() && recentMessages.length > 0) {
-        bubbleCounter.removeClass('d-none');
-        bubbleCounter.text(recentMessages.length <= 9 ? recentMessages.length : '9+');
-    } else {
-        bubbleCounter.addClass('d-none');
-    }
-}
-
-// Para simular a chegada de novas mensagens (via Pusher ou polling)
-function addNewChatMessage(messageData) {
-    let recentMessages = getRecentChatMessages();
-    recentMessages.push(messageData);
-    localStorage.setItem('recent-chat-messages', JSON.stringify(recentMessages));
-    localStorage.setItem('is-read-chat-messages', 0); // Marcar como não lido
-    showChatMessagesCounter();
-}
-
-// Event listener para o clique no ícone do chat
-$(document).ready(function() {
-    // Inicializa o contador de mensagens ao carregar a página
-    showChatMessagesCounter();
-
-    $('#chat-notification-wrapper .navbar-item').on('click', function() {
-        showChatMessages();
-    });
-
-    // Fechar o dropdown do chat quando clicar fora
-    $(document).on('click', function(event) {
-        if (!$(event.target).closest('#chat-notification-wrapper').length &&
-            !$(event.target).closest('.chat-dropdown').length &&
-            !$('#chat-dropdown').hasClass('d-none')) {
-            $('#chat-dropdown').addClass('d-none');
-        }
-    });
-
-    // Simulação de uma nova mensagem chegando após 5 segundos
-    // Em um ambiente real, isso viria do Pusher ou de uma API
-    setTimeout(() => {
-        addNewChatMessage({
-            id: 5,
-            sender: "Novo Contato",
-            message: "Olá! Tudo bem?",
-            time: "Agora",
-            unread: 1,
-        });
-    }, 5000);
+    showRecentNotifications();
+    showNotificationsCounter();
 });

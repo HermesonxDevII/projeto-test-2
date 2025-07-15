@@ -1,12 +1,10 @@
 <div id="kt_header" style="" class="header align-items-stretch pt-4">
     <div class="container-fluid d-flex align-items-stretch justify-content-between">
         <div class="d-flex align-items-center d-lg-none" title="Show aside menu">
-            <div class="btn btn-icon btn-active-light-primary w-30px h-30px w-md-40px h-md-40px"
-                id="kt_aside_mobile_toggle">
+            <div class="btn btn-icon btn-active-light-primary w-30px h-30px w-md-40px h-md-40px" id="kt_aside_mobile_toggle">
                 <img src="{{ asset('images/icons/sidebar-menu.png') }}" alt="">
             </div>
         </div>
-        <!--end::Aside mobile toggle-->
 
         {{-- begin::Mobile logo --}}
         <div>
@@ -15,26 +13,41 @@
             </a>
         </div>
         {{-- end::Mobile logo --}}
+
         <div class="chat d-none">
             {{-- <img alt="Logo" src="{{ asset('images/icons/message.svg') }}" height="35" />
             <span class=" badge badge-pill badge-danger bubble-counter">2</span> --}}
         </div>
 
-        <!--begin::Wrapper-->
+        {{--begin::Wrapper--}}
         @desktop
         <div class="d-flex align-items-stretch justify-content-between flex-lg-grow-1">
-            <!--begin::Navbar-->
+            {{--begin::Navbar--}}
             <div class="d-flex align-items-stretch" id="kt_header_nav">
-                <!--begin::Menu wrapper-->
-                <div class="header-menu align-items-stretch" data-kt-drawer="true" data-kt-drawer-name="header-menu"
-                    data-kt-drawer-activate="{default: true, lg: false}" data-kt-drawer-overlay="true"
-                    data-kt-drawer-width="{default:'200px', '300px': '250px'}" data-kt-drawer-direction="start"
-                    data-kt-drawer-toggle="#kt_header_menu_mobile_toggle" data-kt-swapper="true"
-                    data-kt-swapper-mode="prepend" data-kt-swapper-parent="{default: '#kt_body', lg: '#kt_header_nav'}">
-                    <div class="menu menu-lg-rounded menu-column menu-lg-row menu-state-bg menu-title-gray-700 menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary menu-arrow-gray-400 fw-bold my-5 my-lg-0 align-items-stretch"
-                        id="#kt_header_menu" data-kt-menu="true">
-                        <div data-kt-menu-trigger="click" data-kt-menu-placement="bottom-start"
-                            class="menu-item menu-lg-down-accordion me-lg-1">
+                {{--begin::Menu wrapper--}}
+                <div
+                    class="header-menu align-items-stretch"
+                    data-kt-drawer="true"
+                    data-kt-drawer-name="header-menu"
+                    data-kt-drawer-activate="{default: true, lg: false}"
+                    data-kt-drawer-overlay="true"
+                    data-kt-drawer-width="{default:'200px', '300px': '250px'}"
+                    data-kt-drawer-direction="start"
+                    data-kt-drawer-toggle="#kt_header_menu_mobile_toggle"
+                    data-kt-swapper="true"
+                    data-kt-swapper-mode="prepend"
+                    data-kt-swapper-parent="{default: '#kt_body', lg: '#kt_header_nav'}"
+                >
+                    <div
+                        class="menu menu-lg-rounded menu-column menu-lg-row menu-state-bg menu-title-gray-700 menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary menu-arrow-gray-400 fw-bold my-5 my-lg-0 align-items-stretch"
+                        id="#kt_header_menu"
+                        data-kt-menu="true"
+                    >
+                        <div
+                            data-kt-menu-trigger="click"
+                            data-kt-menu-placement="bottom-start"
+                            class="menu-item menu-lg-down-accordion me-lg-1"
+                        >
                             @include('layouts.header.searchbox')
                         </div>
                     </div>
@@ -66,85 +79,55 @@
                     @endif
                 @endcan
 
-                <!-- <div class="mr-4 navbar-item d-none"
-                    style="width: 56px; height: 56px; background-color: white; border-radius: 12px; text-align: center;
-                        margin-right: 16px;">
-                    <button class="btn" style="height: 100%; width: 100%">
-                        <img src="{{ asset('images/icons/message.svg') }}" alt="">
-                    </button>
-                </div> -->
-
                 {{-- begin:: Messages --}}
-                <div class="d-flex align-items-stretch flex-shrink-0" id="chat-notification-wrapper">
-                    <div class="mr-4 navbar-item"
-                        style="width: 56px; height: 56px; background-color: white; border-radius: 12px; text-align: center; margin-right: 16px; cursor: pointer;">
+                <div
+                    class="d-flex align-items-stretch flex-shrink-0"
+                    id="chat-notification-wrapper"
+                    onclick="toggleChatDropdown()"
+                >
+                    <div class="mr-4 navbar-item" style="width: 56px; height: 56px; background-color: white; border-radius: 12px; text-align: center; margin-right: 16px; position: relative; cursor: pointer;">
                         <button class="btn" style="height: 100%; width: 100%">
-                            <img src="{{ asset('images/icons/message.svg') }}" height="20">
+                            <img src="{{ asset('images/icons/message.svg') }}" height="25" width="25">
                         </button>
-                        {{-- Adicionar o contador de mensagens não lidas aqui --}}
-                        <span class="badge badge-pill badge-danger bubble-counter d-none" id="chat-message-counter">4</span>
+                        <span class="badge badge-pill badge-danger bubble-counter d-none" id="chat-message-counter">0</span>
                     </div>
 
                     <div class="d-none btn-shadow chat-dropdown" id="chat-dropdown">
-                        <div class="p-4" data-kt-menu="true" style="width: 320px; border-radius: 10px; background-color: #fff;">
+                        <div
+                            class=""
+                            data-kt-menu="true"
+                            style="width: 320px; border-radius: 10px; background-color: #fff;"
+                        >
                             <div class="d-flex justify-content-between align-items-center mb-3">
-                                <h2 class="m-0 fs-5">Chat</h2>
-                                <button class="btn btn-sm btn-icon" style="background: none; border: none; padding: 0;">
-                                    <img src="{{ asset('images/icons/expand-icon.svg') }}" alt="Expand" style="width: 24px; height: 24px;">
+                                <h2 class="m-0 fs-5 fw-bold">Chat</h2>
+                                <button
+                                    class="btn btn-sm btn-icon"
+                                    id="expand-chat-button"
+                                    style="background: none; border: none; padding: 0;"
+                                >
+                                    <img
+                                        src="{{ asset('images/icons/expand-icon.svg') }}"
+                                        alt="Expand"
+                                        style="width: 20px; height: 20px;"
+                                    >
                                 </button>
                             </div>
-                            <div class="chat-list" style="max-height: 400px; overflow-y: auto;">
-                                {{-- Aqui serão injetadas as mensagens do chat via JavaScript --}}
-                                <div class="chat-item d-flex align-items-center py-2 px-3 mb-2" style="background-color: #f7f7f7; border-radius: 8px; position: relative;">
-                                    <div class="flex-grow-1">
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <span class="fw-bold">Professor Alex</span>
-                                            <span class="text-muted" style="font-size: 0.8em;">9h</span>
-                                        </div>
-                                        <p class="text-truncate m-0" style="font-size: 0.9em;">Você fez um excelente trabalho</p>
-                                    </div>
-                                    <span class="badge rounded-pill bg-danger ms-2" style="font-size: 0.7em;">2</span>
-                                </div>
-                                <div class="chat-item d-flex align-items-center py-2 px-3 mb-2" style="background-color: #f7f7f7; border-radius: 8px; position: relative;">
-                                    <div class="flex-grow-1">
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <span class="fw-bold">Turma nº1</span>
-                                            <span class="text-muted" style="font-size: 0.8em;">10h</span>
-                                        </div>
-                                        <p class="text-truncate m-0" style="font-size: 0.9em;">Letícia: Essa é a última mensagem do</p>
-                                    </div>
-                                    <span class="badge rounded-pill bg-danger ms-2" style="font-size: 0.7em;">2</span>
-                                </div>
-                                <div class="chat-item d-flex align-items-center py-2 px-3 mb-2" style="background-color: #f7f7f7; border-radius: 8px; position: relative;">
-                                    <div class="flex-grow-1">
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <span class="fw-bold">Turma nº2</span>
-                                            <span class="text-muted" style="font-size: 0.8em;">11h</span>
-                                        </div>
-                                        <p class="text-truncate m-0" style="font-size: 0.9em;">Nome: Essa é a última mensagem do</p>
-                                    </div>
-                                    <span class="badge rounded-pill bg-danger ms-2" style="font-size: 0.7em;">2</span>
-                                </div>
-                                <div class="chat-item d-flex align-items-center py-2 px-3 mb-2" style="background-color: #f7f7f7; border-radius: 8px; position: relative;">
-                                    <div class="flex-grow-1">
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <span class="fw-bold">Turma nº3</span>
-                                            <span class="text-muted" style="font-size: 0.8em;">1d</span>
-                                        </div>
-                                        <p class="text-truncate m-0" style="font-size: 0.9em;">Cleber: Essa é a última mensagem do chat que está...</p>
-                                    </div>
-                                    <span class="badge rounded-pill bg-danger ms-2" style="font-size: 0.7em;">2</span>
-                                </div>
-                            </div>
-                            <a href="#" class="d-block text-center mt-3" style="font-size: 0.9em; color: #329FBA; text-decoration: none;">Ver todas</a>
+                            <div
+                                class="chat-list"
+                                style="max-height: 400px; overflow-y: auto;"
+                                id="chat-messages-container"
+                            ></div>
+                            <a href="#" class="d-block text-center mt-3" style="font-size: 0.9em; color: #329FBA; text-decoration: none;" id="view-all-chats-button">Ver todas</a>
                         </div>
                     </div>
                 </div>
                 {{-- end:: Messages --}}
-                
+
                 {{-- begin:: Notifications --}}
-                <div onclick="getWeeklyNotificationsByStudentSelected(1)"
-                    class="d-flex align-items-stretch flex-shrink-0">
+                <!-- <div
+                    onclick="getWeeklyNotificationsByStudentSelected(1)"
+                    class="d-flex align-items-stretch flex-shrink-0"
+                >
                     <div class="mr-4 navbar-item"
                         style="width: 56px; height: 56px; background-color: white; border-radius: 12px; text-align: center;
                             margin-right: 16px;">
@@ -164,7 +147,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
                 {{-- end:: Notifications --}}
 
                 {{-- begin:: Languages --}}
@@ -190,6 +173,8 @@
                             </ul>
                         </div>
                     </div>
+                @else
+                    <div></div>
                 @endcan
                 {{-- end:: Languages --}}
 
@@ -268,6 +253,50 @@
             </div>
         </div>
         @enddesktop
+        
+        @mobile
+            <div
+                class="d-flex align-items-stretch flex-shrink-0"
+                id="chat-notification-wrapper"
+                onclick="toggleChatDropdown()"
+            >
+                <div class="mr-4 navbar-item" style="width: 56px; height: 56px; background-color: white; border-radius: 12px; text-align: center; margin-right: 16px; position: relative; cursor: pointer;">
+                    <button type="button" class="btn" style="height: 100%; width: 100%">
+                        <img src="{{ asset('images/icons/message.svg') }}" height="30" width="30">
+                    </button>
+                    <span class="badge badge-pill badge-danger bubble-counter d-none" id="chat-message-counter">0</span>
+                </div>
+
+                <div class="d-none btn-shadow chat-dropdown" id="chat-dropdown">
+                    <div
+                        class=""
+                        data-kt-menu="true"
+                        style="width: 320px; border-radius: 10px; background-color: #fff;"
+                    >
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h2 class="m-0 fs-5 fw-bold">Chat</h2>
+                            <button
+                                class="btn btn-sm btn-icon"
+                                id="expand-chat-button"
+                                style="background: none; border: none; padding: 0;"
+                            >
+                                <img
+                                    src="{{ asset('images/icons/expand-icon.svg') }}"
+                                    alt="Expand"
+                                    style="width: 20px; height: 20px;"
+                                >
+                            </button>
+                        </div>
+                        <div
+                            class="chat-list"
+                            style="max-height: 400px; overflow-y: auto;"
+                            id="chat-messages-container"
+                        ></div>
+                        <a href="#" class="d-block text-center mt-3" style="font-size: 0.9em; color: #329FBA; text-decoration: none;" id="view-all-chats-button">Ver todas</a>
+                    </div>
+                </div>
+            </div>
+        @endmobile
 
         {{-- begin:: Languages --}}
         @desktop
@@ -591,11 +620,10 @@
 </div>
 
 <style>
-    /* Estilos para o contador de mensagens (bubble-counter) */
     .bubble-counter {
         position: absolute;
-        top: 5px; /* Ajuste conforme necessário para o posicionamento vertical */
-        right: 5px; /* Ajuste conforme necessário para o posicionamento horizontal */
+        top: 5px;
+        right: 5px;
         padding: .35em .65em;
         font-size: .75em;
         font-weight: 700;
@@ -605,47 +633,134 @@
         white-space: nowrap;
         vertical-align: baseline;
         border-radius: .35rem;
-        z-index: 10; /* Para garantir que o badge fique por cima do ícone */
+        z-index: 10;
     }
 
-    /* Estilos para o dropdown do chat */
     .chat-dropdown {
         position: absolute;
-        top: 60px; /* Ajuste para aparecer abaixo do ícone */
-        right: 0; /* Alinhar à direita com o ícone */
+        top: 75px;
+        right: 30px;
         background-color: white;
         border-radius: 12px;
-        box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1); /* Sombra para o dropdown */
-        z-index: 1000; /* Para ficar acima de outros elementos */
+        box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+        width: 350px;
+        padding: 10px;
     }
 
-    /* Estilos para os itens de chat dentro do dropdown */
+    .chat-dropdown .d-flex.justify-content-between.align-items-center.mb-3 {
+        padding: 0 5px;
+    }
+
+    .chat-dropdown .d-flex.justify-content-between.align-items-center.mb-3 h2 {
+        font-size: 3rem;
+        font-weight: 600;
+    }
+
+    #chat-messages-container {
+        height: 320px;
+        max-height: 320px;
+        overflow-y: auto;
+        padding: 0;
+    }
+
     .chat-item {
-        cursor: pointer;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        margin-bottom: 8px;
+        color: inherit;
+        position: relative;
         transition: background-color 0.2s ease-in-out;
+        border-bottom: 1px solid #f0f0f0;
+        padding: 12px 10px;
+    }
+
+    .chat-item:last-child {
+        border-bottom: none;
     }
 
     .chat-item:hover {
-        background-color: #e9ecef !important; /* Cor ao passar o mouse */
+        background-color: #f7f7f7 !important;
+        border-radius: 8px;
     }
 
-    /* Estilos para o scrollbar no chat-list */
+    .chat-content {
+        flex-grow: 1;
+        min-width: 0;
+    }
+
+    .chat-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 4px;
+    }
+
+    .chat-name {
+        font-weight: bold;
+        font-size: 0.95em;
+        color: #333;
+    }
+
+    .chat-time {
+        font-size: 0.8em;
+        color: #888;
+        white-space: nowrap;
+        margin-left: 10px;
+    }
+
+    .chat-last-message {
+        font-size: 0.9em;
+        color: #666;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin: 0;
+    }
+
+    .chat-unread-count {
+        background-color: #dc3545;
+        color: white;
+        border-radius: 100%;
+        width: 20px;
+        height: 20px;
+        padding: 2px 8px;
+        font-size: 0.75em;
+        font-weight: bold;
+        margin-left: 25px;
+        margin-bottom: 10px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    #view-all-chats-button {
+        padding-top: 15px;
+        display: block;
+        text-align: center;
+        font-size: 0.9em;
+        color: #329FBA;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
     .chat-list::-webkit-scrollbar {
-        width: 8px;
+        width: 5px;
     }
 
     .chat-list::-webkit-scrollbar-track {
-        background: #f1f1f1;
+        background: transparent;
         border-radius: 10px;
     }
 
     .chat-list::-webkit-scrollbar-thumb {
-        background: #888;
+        background: #ccc;
         border-radius: 10px;
     }
 
     .chat-list::-webkit-scrollbar-thumb:hover {
-        background: #555;
+        background: #aaa;
     }
 
     .mt-10px {
@@ -696,9 +811,9 @@
         width: 100%;
         margin-bottom: 13px;
         @desktop height: 284px;
-    @elsedesktop
+        @elsedesktop
         height: 173.878px;
-    @enddesktop
+        @enddesktop
     }
 
     .ml-20px {
@@ -736,9 +851,9 @@
     .onb-steps {
         @desktop padding: 0px 128px;
         height: 366.7px;
-    @elsedesktop
+        @elsedesktop
         height: 264px;
-    @enddesktop
+        @enddesktop
     }
 
     .onb-step {
@@ -749,13 +864,13 @@
     .onb-tabs {
         display: flex;
         @desktop border-bottom: 4px solid #F2F2F5;
-    @enddesktop
-    gap: 40px;
-    margin-bottom: 22px;
-    @mobile align-items: end;
-    overflow-x: scroll;
-    overflow-y: hidden;
-    @endmobile
+        @enddesktop
+        gap: 40px;
+        margin-bottom: 22px;
+        @mobile align-items: end;
+        overflow-x: scroll;
+        overflow-y: hidden;
+        @endmobile
     }
 
     .onb-tabs::-webkit-scrollbar {
@@ -779,18 +894,19 @@
     }
 
     .checkbox-label {
-        @tablet font-size: 12px;
+        @tablet
+        font-size: 12px;
         margin-top: 10px;
         white-space: nowrap;
-    @elsetablet
+        @elsetablet
         font-size: 14px;
-    @endtablet
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    text-align: center;
-    color: #485558;
-    margin-left: 10px;
+        @endtablet
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        text-align: center;
+        color: #485558;
+        margin-left: 10px;
     }
 
     .checkbox-container {
@@ -810,15 +926,16 @@
 
     .checkmark {
         position: absolute;
-        @tablet top: 9px;
-    @elsetablet
+        @tablet
+        top: 9px;
+        @elsetablet
         top: 0;
-    @endtablet
-    left: 0;
-    border-radius: 6px !important;
-    border: 1px solid #329FBA;
-    width: 24px;
-    height: 24px;
+        @endtablet
+        left: 0;
+        border-radius: 6px !important;
+        border: 1px solid #329FBA;
+        width: 24px;
+        height: 24px;
     }
 
     .checkbox-container input[type="checkbox"]:checked~.checkmark {
@@ -858,12 +975,14 @@
         position: relative;
         top: 4px;
         cursor: pointer;
-        @mobile white-space: nowrap;
-    @endmobile
-    @tablet font-size: 16px;
-    height: 32px;
-    white-space: nowrap;
-    @endtablet
+        @mobile
+        white-space: nowrap;
+        @endmobile
+        @tablet
+        font-size: 16px;
+        height: 32px;
+        white-space: nowrap;
+        @endtablet
     }
 
     .onb-tab:hover {
@@ -877,6 +996,54 @@
         border-radius: 2px;
     }
 
+    @media (max-width: 991.98px) {
+        /* 1. Prepara o container principal */
+        #kt_header > .container-fluid {
+            position: relative !important;
+            height: 60px !important; /* Altura fixa para o header mobile */
+        }
+
+        /* 2. Posiciona o ícone de menu na esquerda */
+        #kt_aside_mobile_toggle {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 3;
+        }
+
+        /* 3. Centraliza o logo */
+        a.d-lg-none { /* O link que envolve o logo mobile */
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            text-align: center;
+            z-index: 1;
+        }
+
+        .mobile-logo {
+            height: 40px;
+            width: auto;
+        }
+
+        /* 4. Posiciona o novo ícone de chat na direita */
+        .mobile-header-chat-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 3;
+        }
+
+        /* 5. Esconde os elementos do desktop que sobram no mobile */
+        #kt_header_nav, 
+        #kt_header .d-flex[style*="justify-content: flex-end"] {
+            display: none !important;
+        }
+    }
+
     #classroom-onb-next,
     #course-onb-next,
     #classroom-onb-prev,
@@ -884,9 +1051,9 @@
     #classroom-onb-close,
     #course-onb-close {
         @mobile width: 136px;
-    @endmobile
-    @tablet width: 130px;
-    @endtablet
+        @endmobile
+        @tablet width: 130px;
+        @endtablet
     }
 
     .language-select .dropdown-toggle::after {
@@ -904,27 +1071,7 @@
 </style>
 
 <script>
-    // Format options
-    // var optionFormat = function(item, showText = true) {
-    //     if ( !item.id ) {
-    //         return item.text;
-    //     }
-
-    //     var span = document.createElement('span');
-    //     var imgUrl = item.element.getAttribute('data-kt-select2-country');
-    //     var template = '';
-
-    //     template += '<img src="' + imgUrl + '" class="w-24pxme-2" alt="image"/>';
-
-    //     if (showText) {
-    //         template += item.text;
-    //     }
-
-    //     span.innerHTML = template;
-
-    //     return $(span);
-    // }
-
+    // Seus scripts existentes do header.blade.php
     $('.my-profile-button').on('click', function() {
         window.location = '/myProfile';
     });
@@ -953,19 +1100,6 @@
             }
         });
     });
-
-    // $(document).ready(function() {
-    //     $('#languageSelect').select2({
-    //         templateSelection: function(item) {
-    //             return optionFormat(item, false);
-    //         },
-    //         templateResult: function(item) {
-    //             return optionFormat(item);
-    //         },
-    //         minimumResultsForSearch: -1,
-    //         dropdownCssClass : 'bigdrop'
-    //     });
-    // });
 
     document.addEventListener('DOMContentLoaded', function() {
 

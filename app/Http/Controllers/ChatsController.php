@@ -25,4 +25,17 @@ class ChatsController extends Controller
 
         return view('chats.index', compact('users', 'chatUrl'));
     }
+
+    public function show(Request $request, int $id): View
+    {
+        $users = Auth()->user();
+        
+        $chatUrl = match (app()->environment()) {
+            'local' => "http://localhost:81/chats/{$id}",
+            'homolog' => "https://chat-homolog.academy-meliseducation.com/chats/{$id}",
+            default => "https://chat.academy-meliseducation.com/chats/{$id}",
+        };
+
+        return view('chats.index', compact('users', 'chatUrl'));
+    }
 }
