@@ -988,12 +988,12 @@
                                     fs-14 fw-600
                                 @endmobile
                             "
-                        > Programa M.A.E </span>
+                        > Programa de A.E</span>
 
                         @mobile
-                            <span class="fs-14 fw-600"> (Mentoria Aprendendo a Estudar)📚 <br><br> </span>
+                            <span class="fs-14 fw-600"> (Acompanhamento Escolar) 📚 <br><br> </span>
                         @elsemobile
-                            (Mentoria Aprendendo a Estudar)📚
+                            (Acompanhamento Escolar)📚
                         @endmobile
 
                         @desktop
@@ -2738,7 +2738,7 @@
                         </span>
                     @else
                         <span>
-                            O que precisa acontecer nos estudos do seu filho nos próximos meses para você dizer que valeu a pena investir no Programa M.A.E? <span class="red">*</span>
+                            O que precisa acontecer nos estudos do seu filho nos próximos meses para você dizer que valeu a pena investir no Programa de Acompanhamento Escolar? <span class="red">*</span>
                         </span>
                     @endif
 
@@ -2751,7 +2751,7 @@
 
                 @if ($courses)
                     <div id="guardian-motivations" class="form-card">
-                        <span>Por que você decidiu comprar o Programa M.A.E? <span class="red">*</span></span>
+                        <span>Por que você decidiu comprar o Programa de Acompanhamento Escolar? <span class="red">*</span></span>
 
                         <div class="inputs">
                             <textarea name="guardian-motivations" cols="30" rows="10"></textarea>
@@ -2809,7 +2809,7 @@
                 @else
                     <span class="title mb-29">Parabéns a inscrição do seu filho foi confirmada! 👏🏻 🥳 🙌</span>
                     <span class="content">
-                        Seu link para ter acesso ao Programa M.A.E será enviado para seu e-mail cadastrado no momento da
+                        Seu link para ter acesso ao Programa de Acompanhamento Escolar será enviado para seu e-mail cadastrado no momento da
                         compra!
                         <br>
                         <br>
@@ -3555,60 +3555,63 @@
                     'complement': $('#complement').val(),
                     'japan_time': $('#japan-time').val(),
                     'children': $('#children').val(),
-                    'family_structure': ($('#family-structure input:checked').val() === 'outro') ? ucfirst($(
-                        '#family-structure-other').val()) : $('#family-structure input:checked').val(),
-                    'family_workers': ($('#family-workers input:checked').val() === 'outro') ? ucfirst($(
-                        '#family-workers-other').val()) : $('#family-workers input:checked').val(),
-                    'workload': ($('#workload input:checked').val() === 'outro') ? ucfirst($('#workload-other')
-                        .val()) : $('#workload input:checked').val(),
-                    'speaks_japanese': ($('#speaks-japanese input:checked').val() === 'outro') ? ucfirst($(
-                        '#speaks-japanese-other').val()) : $('#speaks-japanese input:checked').val(),
-                    'studies_at_home': ($('#studies-at-home input:checked').val() === 'outro') ? ucfirst($(
-                        '#studies-at-home-other').val()) : $('#studies-at-home input:checked').val(),
-                    'will_return_to_home_country': ($('#will-return-to-home-country input:checked').val() ===
-                        'outro') ? ucfirst($('#will-return-to-home-country-other').val()) : $(
-                        '#will-return-to-home-country input:checked').val(),
+                    'family_structure': ($('#family-structure input:checked').val() === 'outro')
+                        ? ucfirst($('#family-structure-other').val())
+                        : $('#family-structure input:checked').val(),
+                    'family_workers': ($('#family-workers input:checked').val() === 'outro')
+                        ? ucfirst($('#family-workers-other').val())
+                        : $('#family-workers input:checked').val(),
+                    'workload': ($('#workload input:checked').val() === 'outro')
+                        ? ucfirst($('#workload-other').val())
+                        : $('#workload input:checked').val(),
+                    'speaks_japanese': ($('#speaks-japanese input:checked').val() === 'outro')
+                        ? ucfirst($('#speaks-japanese-other').val())
+                        : $('#speaks-japanese input:checked').val(),
+                    'studies_at_home': ($('#studies-at-home input:checked').val() === 'outro')
+                        ? ucfirst($('#studies-at-home-other').val())
+                        : $('#studies-at-home input:checked').val(),
+                    'will_return_to_home_country': ($('#will-return-to-home-country input:checked').val() === 'outro')
+                        ? ucfirst($('#will-return-to-home-country-other').val())
+                        : $('#will-return-to-home-country input:checked').val(),
                     'home_language': $('#home-language-value').val(),
                     'student_name': $('#student-name').val(),
                     'student_class': $('#student-class').val(),
                     'student_language': $('#student-language').val(),
                     'student_japan_arrival': $('#student-japan-arrival select').val(),
-                    'student_is_shy': ($('#student-is-shy input:checked').val() === 'outro') ? ucfirst($(
-                        '#student-is-shy-other').val()) : $('#student-is-shy input:checked').val(),
-                    'student_time_alone': ($('#student-time-alone input:checked').val() === 'outro') ? ucfirst(
-                            $(
-                                '#student-time-alone-other').val()) : $('#student-time-alone input:checked')
-                        .val(),
+                    'student_is_shy': ($('#student-is-shy input:checked').val() === 'outro')
+                        ? ucfirst($('#student-is-shy-other').val())
+                        : $('#student-is-shy input:checked').val(),
+                    'student_time_alone': ($('#student-time-alone input:checked').val() === 'outro')
+                        ? ucfirst($('#student-time-alone-other').val())
+                        : $('#student-time-alone input:checked').val(),
                     'student_rotine': ucfirst($('#student-rotine textarea').val()),
                     'student_extra_activities': ucfirst($('#student-extra-activities textarea').val()),
-                    'student_is_focused': ($('#student-is-focused input:checked').val() === 'outro') ? ucfirst(
-                            $(
-                                '#student-is-focused-other').val()) : $('#student-is-focused input:checked')
-                        .val(),
-                    'student_is_organized': ($('#student-is-organized input:checked').val() === 'outro') ?
-                        ucfirst(
-                            $('#student-is-organized-other').val()) : $('#student-is-organized input:checked')
-                        .val(),
-                    'student_has_good_memory': ($('#student-has-good-memory input:checked').val() === 'outro') ?
-                        ucfirst($('#student-has-good-memory-other').val()) : $(
-                            '#student-has-good-memory input:checked').val(),
-                    'student_has_a_study_plan': ($('#student-has-a-study-plan input:checked').val() ===
-                            'outro') ?
-                        ucfirst($('#student-has-a-study-plan-other').val()) : $(
-                            '#student-has-a-study-plan input:checked').val(),
-                    'student_reviews_exams': ($('#student-review-tests input:checked').val() === 'outro') ?
-                        ucfirst(
-                            $('#student-review-tests-other').val()) : $('#student-review-tests input:checked')
-                        .val(),
-                    'student_reads': ($('#student-reads input:checked').val() === 'outro') ? ucfirst($(
-                        '#student-reads-other').val()) : $('#student-reads input:checked').val(),
-                    'student_studies': ($('#student-studies input:checked').val() === 'outro') ? ucfirst($(
-                        '#student-studies-other').val()) : $('#student-studies input:checked').val(),
+                    'student_is_focused': ($('#student-is-focused input:checked').val() === 'outro')
+                        ? ucfirst($('#student-is-focused-other').val())
+                        : $('#student-is-focused input:checked').val(),
+                    'student_is_organized': ($('#student-is-organized input:checked').val() === 'outro')
+                        ? ucfirst($('#student-is-organized-other').val())
+                        : $('#student-is-organized input:checked').val(),
+                    'student_has_good_memory': ($('#student-has-good-memory input:checked').val() === 'outro')
+                        ? ucfirst($('#student-has-good-memory-other').val())
+                        : $('#student-has-good-memory input:checked').val(),
+                    'student_has_a_study_plan': ($('#student-has-a-study-plan input:checked').val() === 'outro')
+                        ? ucfirst($('#student-has-a-study-plan-other').val())
+                        : $('#student-has-a-study-plan input:checked').val(),
+                    'student_reviews_exams': ($('#student-review-tests input:checked').val() === 'outro')
+                        ? ucfirst($('#student-review-tests-other').val())
+                        : $('#student-review-tests input:checked').val(),
+                    'student_reads': ($('#student-reads input:checked').val() === 'outro')
+                        ? ucfirst($('#student-reads-other').val())
+                        : $('#student-reads input:checked').val(),
+                    'student_studies': ($('#student-studies input:checked').val() === 'outro')
+                        ? ucfirst($('#student-studies-other').val())
+                        : $('#student-studies input:checked').val(),
                     'student_watches_tv': ucfirst($('#student-watches-tv textarea').val()),
                     'student_uses_internet': ucfirst($('#student-uses-internet textarea').val()),
-                    'student_has_smartphone': ($('#student-has-smartphone input:checked').val() === 'outro') ?
-                        ucfirst($('#student-has-smartphone-other').val()) : $(
-                            '#student-has-smartphone input:checked').val(),
+                    'student_has_smartphone': ($('#student-has-smartphone input:checked').val() === 'outro')
+                        ? ucfirst($('#student-has-smartphone-other').val())
+                        : $('#student-has-smartphone input:checked').val(),
                     'kokugo_grade': $('input[name="kokugo-grade"]:checked').val(),
                     'shakai_grade': $('input[name="shakai-grade"]:checked').val(),
                     'sansuu_grade': $('input[name="sansuu-grade"]:checked').val(),
@@ -3616,22 +3619,20 @@
                     'eigo_grade': $('input[name="eigo-grade"]:checked').val(),
                     'student_has_difficult': $('#student-has-difficult-value').val(),
                     'student_difficult_in_class': ucfirst($('#student-difficult-in-class textarea').val()),
-                    'student_frequency_in_support_class': ($(
-                            '#student-frequency-in-support-class input:checked')
-                        .val() === 'outro') ? ucfirst($('#student-frequency-in-support-class-other')
-                        .val()) : $(
-                        '#student-frequency-in-support-class input:checked').val(),
-                    'student_will_take_entrance_exams': ($('#student-will-take-entrance-exames input:checked')
-                            .val() === 'outro') ? ucfirst($('#student-will-take-entrance-exames-other').val()) :
-                        $(
-                            '#student-will-take-entrance-exames input:checked').val(),
-                    'student_has_taken_online_classes': ($('#student-has-taken-online-classes input:checked')
-                            .val() === 'outro') ? ucfirst($('#student-has-taken-online-classes-other').val()) :
-                        $(
-                            '#student-has-taken-online-classes input:checked').val(),
+                    'student_frequency_in_support_class': ($('#student-frequency-in-support-class input:checked').val() === 'outro')
+                        ? ucfirst($('#student-frequency-in-support-class-other').val())
+                        : $('#student-frequency-in-support-class input:checked').val(),
+                    'student_will_take_entrance_exams': ($('#student-will-take-entrance-exames input:checked').val() === 'outro')
+                        ? ucfirst($('#student-will-take-entrance-exames-other').val())
+                        : $('#student-will-take-entrance-exames input:checked').val(),
+                    'student_has_taken_online_classes': ($('#student-has-taken-online-classes input:checked').val() === 'outro')
+                        ? ucfirst($('#student-has-taken-online-classes-other').val())
+                        : $('#student-has-taken-online-classes input:checked').val(),
                     'guardian_expectations': ucfirst($('#guardian-expectations textarea').val()),
                     'guardian_motivations': ucfirst($('#guardian-motivations textarea').val()),
                     'guardian_concerns': ucfirst($('#guardian-concerns textarea').val()),
+                    'program': 'Acompanhamento Escolar',
+                    'program_acronym': 'A.E'
                 };
 
                 $.ajax({
@@ -3741,53 +3742,63 @@
                 'complement': $('#complement').val(),
                 'japan_time': $('#japan-time').val(),
                 'children': $('#children').val(),
-                'family_structure': ($('#family-structure input:checked').val() === 'outro') ? ucfirst($(
-                    '#family-structure-other').val()) : $('#family-structure input:checked').val(),
-                'family_workers': ($('#family-workers input:checked').val() === 'outro') ? ucfirst($(
-                    '#family-workers-other').val()) : $('#family-workers input:checked').val(),
-                'workload': ($('#workload input:checked').val() === 'outro') ? ucfirst($('#workload-other')
-                    .val()) : $('#workload input:checked').val(),
-                'speaks_japanese': ($('#speaks-japanese input:checked').val() === 'outro') ? ucfirst($(
-                    '#speaks-japanese-other').val()) : $('#speaks-japanese input:checked').val(),
-                'studies_at_home': ($('#studies-at-home input:checked').val() === 'outro') ? ucfirst($(
-                    '#studies-at-home-other').val()) : $('#studies-at-home input:checked').val(),
-                'will_return_to_home_country': ($('#will-return-to-home-country input:checked').val() ===
-                    'outro') ? ucfirst($('#will-return-to-home-country-other').val()) : $(
-                    '#will-return-to-home-country input:checked').val(),
+                'family_structure': ($('#family-structure input:checked').val() === 'outro')
+                    ? ucfirst($('#family-structure-other').val())
+                    : $('#family-structure input:checked').val(),
+                'family_workers': ($('#family-workers input:checked').val() === 'outro')
+                    ? ucfirst($('#family-workers-other').val())
+                    : $('#family-workers input:checked').val(),
+                'workload': ($('#workload input:checked').val() === 'outro')
+                    ? ucfirst($('#workload-other').val())
+                    : $('#workload input:checked').val(),
+                'speaks_japanese': ($('#speaks-japanese input:checked').val() === 'outro')
+                    ? ucfirst($('#speaks-japanese-other').val())
+                    : $('#speaks-japanese input:checked').val(),
+                'studies_at_home': ($('#studies-at-home input:checked').val() === 'outro')
+                    ? ucfirst($('#studies-at-home-other').val())
+                    : $('#studies-at-home input:checked').val(),
+                'will_return_to_home_country': ($('#will-return-to-home-country input:checked').val() === 'outro')
+                    ? ucfirst($('#will-return-to-home-country-other').val())
+                    : $('#will-return-to-home-country input:checked').val(),
                 'home_language': $('#home-language-value').val(),
                 'student_name': $('#student-name').val(),
                 'student_class': $('#student-class').val(),
                 'student_language': $('#student-language').val(),
                 'student_japan_arrival': $('#student-japan-arrival select').val(),
-                'student_is_shy': ($('#student-is-shy input:checked').val() === 'outro') ? ucfirst($(
-                    '#student-is-shy-other').val()) : $('#student-is-shy input:checked').val(),
-                'student_time_alone': ($('#student-time-alone input:checked').val() === 'outro') ? ucfirst($(
-                    '#student-time-alone-other').val()) : $('#student-time-alone input:checked').val(),
+                'student_is_shy': ($('#student-is-shy input:checked').val() === 'outro')
+                    ? ucfirst($('#student-is-shy-other').val())
+                    : $('#student-is-shy input:checked').val(),
+                'student_time_alone': ($('#student-time-alone input:checked').val() === 'outro')
+                    ? ucfirst($('#student-time-alone-other').val())
+                    : $('#student-time-alone input:checked').val(),
                 'student_rotine': ucfirst($('#student-rotine textarea').val()),
                 'student_extra_activities': ucfirst($('#student-extra-activities textarea').val()),
-                'student_is_focused': ($('#student-is-focused input:checked').val() === 'outro') ? ucfirst($(
-                    '#student-is-focused-other').val()) : $('#student-is-focused input:checked').val(),
-                'student_is_organized': ($('#student-is-organized input:checked').val() === 'outro') ? ucfirst(
-                        $('#student-is-organized-other').val()) : $('#student-is-organized input:checked')
-                    .val(),
-                'student_has_good_memory': ($('#student-has-good-memory input:checked').val() === 'outro') ?
-                    ucfirst($('#student-has-good-memory-other').val()) : $(
-                        '#student-has-good-memory input:checked').val(),
-                'student_has_a_study_plan': ($('#student-has-a-study-plan input:checked').val() === 'outro') ?
-                    ucfirst($('#student-has-a-study-plan-other').val()) : $(
-                        '#student-has-a-study-plan input:checked').val(),
-                'student_reviews_exams': ($('#student-review-tests input:checked').val() === 'outro') ? ucfirst(
-                        $('#student-review-tests-other').val()) : $('#student-review-tests input:checked')
-                    .val(),
-                'student_reads': ($('#student-reads input:checked').val() === 'outro') ? ucfirst($(
-                    '#student-reads-other').val()) : $('#student-reads input:checked').val(),
-                'student_studies': ($('#student-studies input:checked').val() === 'outro') ? ucfirst($(
-                    '#student-studies-other').val()) : $('#student-studies input:checked').val(),
+                'student_is_focused': ($('#student-is-focused input:checked').val() === 'outro')
+                    ? ucfirst($('#student-is-focused-other').val())
+                    : $('#student-is-focused input:checked').val(),
+                'student_is_organized': ($('#student-is-organized input:checked').val() === 'outro')
+                    ? ucfirst($('#student-is-organized-other').val())
+                    : $('#student-is-organized input:checked').val(),
+                'student_has_good_memory': ($('#student-has-good-memory input:checked').val() === 'outro')
+                    ? ucfirst($('#student-has-good-memory-other').val())
+                    : $('#student-has-good-memory input:checked').val(),
+                'student_has_a_study_plan': ($('#student-has-a-study-plan input:checked').val() === 'outro')
+                    ? ucfirst($('#student-has-a-study-plan-other').val())
+                    : $('#student-has-a-study-plan input:checked').val(),
+                'student_reviews_exams': ($('#student-review-tests input:checked').val() === 'outro')
+                    ? ucfirst($('#student-review-tests-other').val())
+                    : $('#student-review-tests input:checked').val(),
+                'student_reads': ($('#student-reads input:checked').val() === 'outro')
+                    ? ucfirst($('#student-reads-other').val())
+                    : $('#student-reads input:checked').val(),
+                'student_studies': ($('#student-studies input:checked').val() === 'outro')
+                    ? ucfirst($('#student-studies-other').val())
+                    : $('#student-studies input:checked').val(),
                 'student_watches_tv': ucfirst($('#student-watches-tv textarea').val()),
                 'student_uses_internet': ucfirst($('#student-uses-internet textarea').val()),
-                'student_has_smartphone': ($('#student-has-smartphone input:checked').val() === 'outro') ?
-                    ucfirst($('#student-has-smartphone-other').val()) : $(
-                        '#student-has-smartphone input:checked').val(),
+                'student_has_smartphone': ($('#student-has-smartphone input:checked').val() === 'outro')
+                    ? ucfirst($('#student-has-smartphone-other').val())
+                    : $('#student-has-smartphone input:checked').val(),
                 'kokugo_grade': $('input[name="kokugo-grade"]:checked').val(),
                 'shakai_grade': $('input[name="shakai-grade"]:checked').val(),
                 'sansuu_grade': $('input[name="sansuu-grade"]:checked').val(),
@@ -3795,18 +3806,20 @@
                 'eigo_grade': $('input[name="eigo-grade"]:checked').val(),
                 'student_has_difficult': $('#student-has-difficult-value').val(),
                 'student_difficult_in_class': ucfirst($('#student-difficult-in-class textarea').val()),
-                'student_frequency_in_support_class': ($('#student-frequency-in-support-class input:checked')
-                    .val() === 'outro') ? ucfirst($('#student-frequency-in-support-class-other').val()) : $(
-                    '#student-frequency-in-support-class input:checked').val(),
-                'student_will_take_entrance_exams': ($('#student-will-take-entrance-exames input:checked')
-                    .val() === 'outro') ? ucfirst($('#student-will-take-entrance-exames-other').val()) : $(
-                    '#student-will-take-entrance-exames input:checked').val(),
-                'student_has_taken_online_classes': ($('#student-has-taken-online-classes input:checked')
-                    .val() === 'outro') ? ucfirst($('#student-has-taken-online-classes-other').val()) : $(
-                    '#student-has-taken-online-classes input:checked').val(),
+                'student_frequency_in_support_class': ($('#student-frequency-in-support-class input:checked') .val() === 'outro')
+                    ? ucfirst($('#student-frequency-in-support-class-other').val())
+                    : $('#student-frequency-in-support-class input:checked').val(),
+                'student_will_take_entrance_exams': ($('#student-will-take-entrance-exames input:checked').val() === 'outro')
+                    ? ucfirst($('#student-will-take-entrance-exames-other').val())
+                    : $('#student-will-take-entrance-exames input:checked').val(),
+                'student_has_taken_online_classes': ($('#student-has-taken-online-classes input:checked').val() === 'outro')
+                    ? ucfirst($('#student-has-taken-online-classes-other').val())
+                    : $('#student-has-taken-online-classes input:checked').val(),
                 'guardian_expectations': ucfirst($('#guardian-expectations textarea').val()),
                 'guardian_motivations': ucfirst($('#guardian-motivations textarea').val()),
                 'guardian_concerns': ucfirst($('#guardian-concerns textarea').val()),
+                'program': 'Acompanhamento Escolar',
+                'program_acronym': 'A.E'
             };
 
             $.ajax({

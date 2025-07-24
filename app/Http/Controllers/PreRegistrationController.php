@@ -5,8 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\PreRegistration;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\{ Validator, Log };
 use App\Http\Requests\PreRegistrationRequest;
 
 class PreRegistrationController extends Controller
@@ -16,14 +15,35 @@ class PreRegistrationController extends Controller
         $this->middleware('guest');
     }
 
-    public function __invoke($courses = false)
+    public function __invoke($courses = false, $program = false)
     {
-        if($courses === 'courses')
-        {
+        if ($courses === 'courses') {
             $courses = true;
         }
 
-        return view('pre-registration.form', ['courses' => $courses]);
+        $programSelected = false;
+
+        if ($program === 'MentoringLearningToStudy') {
+            $programSelected = 'MAE';
+
+            return view('pre-registration.mentoring-learning-to-study.form', [
+                'courses' => $courses,
+                'programSelected' => $programSelected
+            ]);
+
+        } elseif ($program === 'SchoolMonitoringProgram') {
+            $programSelected = 'PAE';
+
+            return view('pre-registration.school-monitoring-program.form', [
+                'courses' => $courses,
+                'programSelected' => $programSelected
+            ]);
+        }
+
+        return view('pre-registration.form', [
+            'courses' => $courses,
+            'programSelected' => $programSelected
+        ]);
     }
 
     public static function store(Request $request)

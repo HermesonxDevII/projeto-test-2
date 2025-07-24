@@ -459,7 +459,7 @@
                                 @else
                                     <span class="pre-registration-question">O que precisa acontecer nos estudos do seu
                                         filho nos próximos meses para você dizer que valeu a pena investir no Programa
-                                        M.A.E? </span>
+                                        {{ $preRegistration->program }} ({{ $preRegistration->program_acronym }})? </span>
                                 @endif
                                 <span class="pre-registration-answer">{{ $preRegistration->guardian_expectations }}</span>
                             </div>
@@ -472,7 +472,7 @@
                         @if (!is_null($preRegistration->guardian_motivations))
                             <div class="d-flex">
                                 <div class="pre-registration-question-wrapper">
-                                    <span class="pre-registration-question">⁠Por que você decidiu comprar o Programa M.A.E? </span>
+                                    <span class="pre-registration-question">⁠Por que você decidiu comprar o Programa {{ $preRegistration->program }} ({{ $preRegistration->program_acronym }})? </span>
                                     <span class="pre-registration-answer">{{ $preRegistration->guardian_motivations }}</span>
                                 </div>
                             </div>

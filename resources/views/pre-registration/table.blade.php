@@ -6,6 +6,7 @@
                 <th>Responsável</th>
                 <th>Aluno(a)</th>
                 <th>Série</th>
+                <th>Programa</th>
                 <th>Opções</th>
             </tr>
         </thead>
@@ -16,6 +17,7 @@
                 <td class="align-middle">{{ $preRegistration->guardian_name }}</td>
                 <td class="align-middle">{{ $preRegistration->student_name }}</td>
                 <td class="align-middle">{{ $preRegistration->student_class }}</td>
+                <td class="align-middle">{{ $preRegistration->program }}</td>
                 <td class="align-middle">
                     <div class="d-flex">
                         <x-btn-action class="me-2" :action="route('preRegistration.show', $preRegistration->id)" icon="eye"/>

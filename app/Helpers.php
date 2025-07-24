@@ -217,3 +217,45 @@ if (!function_exists('getLanguages')) {
         return \App\Models\Language::all();
     }
 }
+
+if (!function_exists('getWherebyKey')) {
+    function getWherebyKey()
+    {
+        return env('WHEREBY_API_KEY');
+    }
+}
+
+if (!function_exists('transmissionEndDate')) {
+    function transmissionEndDate()
+    {
+        return now('America/Sao_Paulo')
+            ->addHours(2)
+            ->setSeconds(0)
+            ->utc()
+            ->toIso8601ZuluString('millisecond');
+    }
+}
+
+if (!function_exists('formatBrazilDate')) {
+    function formatBrazilDate(string $value)
+    {
+        return Carbon::parse($value)->format('Y-m-d H:i:s');
+    }
+}
+
+if (!function_exists('generateSlug')) {
+    function generateSlug(string $string): string
+    {
+        $string = iconv('UTF-8', 'ASCII//TRANSLIT', $string);
+
+        $string = strtolower($string);
+
+        $string = preg_replace('/[^a-z0-9\s-]/', '', $string);
+
+        $string = preg_replace('/[\s-]+/', '-', $string);
+
+        $string = trim($string, '-');
+
+        return $string;
+    }
+}

@@ -27,6 +27,7 @@ use App\Http\Controllers\{
     ChatsController,
     EventPreRegistrationController,
     PreRegistrationTemporaryController,
+    MeetingController
 };
 use App\Models\User;
 use App\Http\Middleware\Locale;
@@ -36,12 +37,9 @@ Route::get('/', [LoginController::class, 'showLoginForm']);
 Auth::routes();
 
 Route::prefix('/preRegistration')->group(function () {
-    Route::get('{courses?}', PreRegistrationController::class)
-        ->name('preRegistration.form');
-    Route::post('/', [PreRegistrationController::class, 'store'])
-        ->name('preRegistration.store');
-    Route::post('/tryGetAddressByEmail', [PreRegistrationController::class, 'tryGetAddressByEmail'])
-        ->name('preRegistration.tryGetAddressByEmail');
+    Route::get('preRegistration/{courses?}/{program?}', PreRegistrationController::class)->name('preRegistration.form');
+    Route::post('/', [PreRegistrationController::class, 'store'])->name('preRegistration.store');
+    Route::post('/tryGetAddressByEmail', [PreRegistrationController::class, 'tryGetAddressByEmail'])->name('preRegistration.tryGetAddressByEmail');
 });
 
 Route::prefix('/gakulab-30dias')->group(function () {
@@ -77,6 +75,7 @@ Route::group(['middleware' => ['auth', 'locale']], function () {
     Route::get('/preRegistrationsTemporary/{preRegistrationTemporary}', [AdminPreRegistrationTemporaryController::class, 'show'])
         ->name('preRegistrationTemporary.show');
     
+    Route::resource('/meetings', MeetingController::class);
 
     Route::prefix('/guardians')->group(function () {
         Route::get('/', [GuardianController::class, 'index'])->name('guardians.index');

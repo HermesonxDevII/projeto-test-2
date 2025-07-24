@@ -1,3 +1,8 @@
+document.getElementById('btn-iniciar-aula').addEventListener('click', function () {
+    const modal = new bootstrap.Modal(document.getElementById('createTransmissionModal'));
+    modal.show();
+});
+
 function hideAddStudents() {
     $('#add-students').fadeOut();
 }

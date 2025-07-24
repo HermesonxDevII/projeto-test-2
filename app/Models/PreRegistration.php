@@ -62,7 +62,9 @@ class PreRegistration extends Model
         'guardian_expectations',
         'guardian_concerns',
         'guardian_motivations',
-        'student_id'
+        'student_id',
+        'program',
+        'program_acronym'
     ];
 
     protected $appends = [

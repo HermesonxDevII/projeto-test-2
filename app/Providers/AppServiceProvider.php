@@ -2,12 +2,10 @@
 
 namespace App\Providers;
 
-use App\Models\User;
-use App\Observers\UserObserver;
-use Illuminate\Support\Facades\URL;
+use App\Models\{ User, Classroom };
+use App\Observers\{ UserObserver, ClassroomObserver };
+use Illuminate\Support\Facades\{ URL, Blade };
 use Illuminate\Support\ServiceProvider;
-use App\Models\Classroom;
-use App\Observers\ClassroomObserver;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -36,5 +34,6 @@ class AppServiceProvider extends ServiceProvider
 
         Classroom::observe(ClassroomObserver::class);
         
+        Blade::anonymousComponentPath(resource_path('views/classrooms/components'), 'classroom');
     }
 }

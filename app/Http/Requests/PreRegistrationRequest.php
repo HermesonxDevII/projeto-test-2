@@ -64,6 +64,8 @@ class PreRegistrationRequest extends FormRequest
             'guardian_expectations' => 'nullable|string|max:10000',
             'guardian_concerns' => 'nullable|string|max:10000',
             'guardian_motivations' => 'nullable|string|max:10000',
+            'program' => 'nullable|string|max:10000',
+            'program_acronym' => 'nullable|string|max:10000'
         ];
     }
 

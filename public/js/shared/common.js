@@ -105,6 +105,14 @@ function validateHTML(html) {
 // Student & Session Related Functions
 let user_role, user_id, student;
 
+function getApiParticipantId() {
+    if (user_role === 'guardian' && typeof studentId !== 'undefined' && studentId !== null) {
+        return studentId;
+    }
+    
+    return user_id;
+}
+
 function getUserRole() {
     $.ajax({
         url: `/session/getUserRole`,
@@ -368,9 +376,14 @@ function setupChatToggle() {
 
 async function fetchTotalUnreadMessages() {
     try {
+
+        const participantId = getApiParticipantId();
+        if (!participantId) return;
+    
         const chatBaseUrl = getChatBaseUrl(true);
-        const response = await fetch(`${chatBaseUrl}/integration-api/chat/total-unread-messages/${user_id}`);
+        const response = await fetch(`${chatBaseUrl}/integration-api/chat/total-unread-messages/${participantId}`);
         const data = await response.json();
+
         if (chatMessageCounter) {
             if (data.total_unread > 0) {
                 chatMessageCounter.textContent = data.total_unread;
@@ -386,8 +399,12 @@ async function fetchTotalUnreadMessages() {
 
 async function fetchRecentMessages() {
     try {
+
+        const participantId = getApiParticipantId();
+        if (!participantId) return;
+
         const chatBaseUrl = getChatBaseUrl(true);
-        const response = await fetch(`${chatBaseUrl}/integration-api/chat/recent-messages-for-notifications/${user_id}`);
+        const response = await fetch(`${chatBaseUrl}/integration-api/chat/recent-messages-for-notifications/${participantId}`);
         const data = await response.json();
 
         if (chatMessagesContainer) {
@@ -399,12 +416,17 @@ async function fetchRecentMessages() {
                         <a href="${chatURL}" class="chat-item text-decoration-none">
                             <div class="chat-content">
                                 <span class="chat-name">${message.conversation_name}</span>
-                                <p class="chat-last-message">${message.last_message}</p>
+                                <p class="chat-last-message">
+                                    ${message.last_message_sender
+                                        ? message.last_message_sender + ': '
+                                        : ''
+                                    }${message.last_message}
+                                </p>
                             </div>
 
                             <div class="chat-meta">
                                 ${message.unread_count > 0
-                                    ? `<div class="chat-unread-count">${message.unread_count}</div>`
+                                    ? `<div class="chat-unread-count" >${message.unread_count}</div>`
                                     : ''
                                 }
                                 <span class="chat-time">${message.last_message_time}</span>
@@ -424,8 +446,11 @@ async function fetchRecentMessages() {
 
 async function markConversationAsRead(conversationId) {
     try {
+        const participantId = getApiParticipantId();
+        if (!participantId) return;
+
         const chatBaseUrl = getChatBaseUrl(true);
-        await fetch(`${chatBaseUrl}/integration-api/chat/${conversationId}/mark-as-read`, {
+        await fetch(`${chatBaseUrl}/integration-api/chat/${conversationId}/mark-as-read/${participantId}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -440,8 +465,13 @@ async function markConversationAsRead(conversationId) {
 
 async function markAllConversationsAsRead() {
     try {
+
+        const participantId = getApiParticipantId();
+        if (!participantId) return;
+
         const chatBaseUrl = getChatBaseUrl(true);
-        const response = await fetch(`${chatBaseUrl}/integration-api/chat/recent-messages-for-notifications`);
+        const response = await fetch(`${chatBaseUrl}/integration-api/chat/recent-messages-for-notifications/${participantId}`);
+
         const data = await response.json();
         if (data.formatted_messages) {
             for (const message of data.formatted_messages) {
@@ -496,7 +526,7 @@ $(document).ready(function () {
     setupChatToggle();
     setupChatButtons();
     fetchTotalUnreadMessages();
-    chatPollingInterval = setInterval(fetchTotalUnreadMessages, 30000);
+    chatPollingInterval = setInterval(fetchTotalUnreadMessages, 15000);
 
     showRecentNotifications();
     showNotificationsCounter();

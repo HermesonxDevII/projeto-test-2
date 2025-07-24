@@ -14,24 +14,53 @@
             <h1 class="p-0 m-0 classroom-title">
                 {{ $classroom->formatted_name }}
             </h1>
-            <input type="hidden" name="classroom_id" id="classroom_id" value="{{ $classroom->id }}">
+
+            <input
+                type="hidden"
+                name="classroom_id"
+                id="classroom_id"
+                value="{{ $classroom->id }}"
+            />
         </div>
+
         <div class="col-sm-12 col-md-12 col-lg-6 classroom-action-row d-flex justify-content-end">
             <div>
-                <a href="{{ route('classrooms.recorded-courses', $classroom->id) }}"
-                    class="btn bg-danger btn-shadow p-3 me-3">
-                    <img src="{{ asset('images/icons/video.svg') }}" alt="Video Icon" />
+                <button
+                    type="button"
+                    class="btn bg-danger btn-shadow p-3 me-3"
+                    id="btn-iniciar-aula"
+                >
+                    <img
+                        src="{{ asset('images/icons/video.svg') }}"
+                        alt="Video Icon"
+                    />
+                    <span class="text-white align-middle">Iniciar Aula ao Vivo</span>
+                </button>
+
+                <a
+                    href="{{ route('classrooms.recorded-courses', $classroom->id) }}"
+                    class="btn bg-primary btn-shadow p-3 me-3"
+                >
+                    <img
+                        src="{{ asset('images/icons/video.svg') }}"
+                        alt="Video Icon"
+                    />
                     <span class="text-white align-middle">Aulas gravadas</span>
                 </a>
 
                 @can('admin')
-                    <a href="{{ route('classrooms.edit', $classroom->id) }}" class="btn bg-primary btn-shadow p-3 ps-10 pe-10">
+                    <a
+                        href="{{ route('classrooms.edit', $classroom->id) }}"
+                        class="btn bg-primary btn-shadow p-3 ps-10 pe-10"
+                    >
                         <span class="text-white">Editar</span>
                     </a>
                 @endcan
             </div>
         </div>
     </div>
+
+    <x-classroom::create-transmission-modal />
 
     @canany(['admin', 'teacher'])
         <div class="card">
@@ -97,10 +126,15 @@
                                         </div>
                                         <div class="col-12 col-md-2">
                                             <span class="sub-title">Professor:</span>
-                                            <img class="classroom-teacher-photo {{ $course->teacher->trashed() ? 'teacher-deleted-photo' : '' }}"
-                                                src="{{ asset("storage/{$course->teacher->profile_photo}") }}" height="30"
-                                                alt="User Profile Photo" data-toggle='tooltip' data-placement='top'
-                                                title='{{ $course->teacher->name }} {{ $course->teacher->trashed() ? '- Excluído' : '' }}'>
+                                            <img
+                                                class="classroom-teacher-photo {{ $course->teacher->trashed() ? 'teacher-deleted-photo' : '' }}"
+                                                src="{{ asset("storage/{$course->teacher->profile_photo}") }}"
+                                                height="30"
+                                                alt="User Profile Photo"
+                                                data-toggle='tooltip'
+                                                data-placement='top'
+                                                title='{{ $course->teacher->name }} {{ $course->teacher->trashed() ? '- Excluído' : '' }}'
+                                            />
                                         </div>
                                     </div>
 
@@ -140,9 +174,19 @@
                 <div class="d-flex justify-content-end mt-5 mb-5">
                     <div style="text-align: end">
                         <div class="searchbox-table d-flex">
-                            <input type="text" class="form-control m-auto" id="search_datatable"
-                                placeholder="Faça uma busca..." style="height: 20px">
-                            <button type="submit" class="btn bg-primary btn-shadow" style="width: 28px; height: 26px;">
+                            <input
+                                type="text"
+                                class="form-control m-auto"
+                                id="search_datatable"
+                                placeholder="Faça uma busca..."
+                                style="height: 20px"
+                            />
+
+                            <button
+                                type="submit"
+                                class="btn bg-primary btn-shadow"
+                                style="width: 28px; height: 26px;"
+                            >
                                 <img src="{{ asset('images/icons/find.svg') }}" alt="Find Icon" />
                             </button>
                         </div>
@@ -170,14 +214,15 @@
 
                             <div class="col-6 d-flex justify-content-end">
                                 <div>
-                                    <button class="btn bg-secondary btn-shadow text-white p-3 ps-10 pe-10 me-3"
-                                        onclick="hideAddStudents();">
-                                        Cancelar
-                                    </button>
-                                    <button class="btn bg-primary btn-shadow text-white p-3 ps-10 pe-10"
-                                        onclick="addStudent();">
-                                        Adicionar
-                                    </button>
+                                    <button
+                                        class="btn bg-secondary btn-shadow text-white p-3 ps-10 pe-10 me-3"
+                                        onclick="hideAddStudents();"
+                                    > Cancelar </button>
+
+                                    <button
+                                        class="btn bg-primary btn-shadow text-white p-3 ps-10 pe-10"
+                                        onclick="addStudent();"
+                                    > Adicionar </button>
                                 </div>
                             </div>
                         </div>
@@ -192,18 +237,36 @@
                 <div class="container-fluid p-0">
                     <nav>
                         <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                            <a class="nav-link active tab-title" id="nav-alunos-tab" data-toggle="tab" href="#nav-alunos"
-                                role="tab" aria-controls="nav-alunos" aria-selected="true">Alunos</a>
+                            <a
+                                class="nav-link active tab-title"
+                                id="nav-alunos-tab"
+                                data-toggle="tab"
+                                href="#nav-alunos"
+                                role="tab"
+                                aria-controls="nav-alunos"
+                                aria-selected="true"
+                            > Alunos </a>
+
                             @if ($classroom->evaluationModel)
-                                <a class="nav-link tab-title" id="nav-avaliacoes-tab" data-toggle="tab"
-                                    href="#nav-avaliacoes" role="tab" aria-controls="nav-avaliacoes"
-                                    aria-selected="false">Avaliações</a>
+                                <a
+                                    class="nav-link tab-title"
+                                    id="nav-avaliacoes-tab"
+                                    data-toggle="tab"
+                                    href="#nav-avaliacoes"
+                                    role="tab"
+                                    aria-controls="nav-avaliacoes"
+                                    aria-selected="false"
+                                > Avaliações </a>
                             @endif
                         </div>
                     </nav>
                     <div class="tab-content" id="nav-tabContent">
-                        <div class="tab-pane fade show active" id="nav-alunos" role="tabpanel"
-                            aria-labelledby="nav-alunos-tab">
+                        <div
+                            class="tab-pane fade show active"
+                            id="nav-alunos"
+                            role="tabpanel"
+                            aria-labelledby="nav-alunos-tab"
+                        >
                             <div class="table-responsive-sm">
                                 <table class="table table-curved mt-5" id="classroom_students">
                                     <thead>
@@ -255,8 +318,12 @@
                         </div>
 
                         @if ($classroom->evaluationModel)
-                            <div class="tab-pane fade" id="nav-avaliacoes" role="tabpanel"
-                                aria-labelledby="nav-avaliacoes-tab">
+                            <div
+                                class="tab-pane fade"
+                                id="nav-avaliacoes"
+                                role="tabpanel"
+                                aria-labelledby="nav-avaliacoes-tab"
+                            >
                                 <div class="table-responsive-sm">
                                     <table class="table table-curved mt-5" id="classroom_evaluations">
                                         <thead>
@@ -280,14 +347,25 @@
                                                         {{ $evaluation->author }}
                                                     </td>
                                                     <td class="align-middle text-end">
-                                                        <x-btn-action :action="route('evaluations.edit', [
-                                                            $classroom->id,
-                                                            $evaluation->id,
-                                                        ])" icon="pen" />
-                                                        <x-btn-action :action="route('evaluations.show', $evaluation->id)" icon="eye" />
-                                                        <x-btn-action class="me-4" action="javascript: void(0);"
+                                                        <x-btn-action
+                                                            :action="route('evaluations.edit', [
+                                                                $classroom->id,
+                                                                $evaluation->id,
+                                                            ])"
+                                                            icon="pen"
+                                                        />
+                                                        
+                                                        <x-btn-action
+                                                            :action="route('evaluations.show', $evaluation->id)"
+                                                            icon="eye"
+                                                        />
+
+                                                        <x-btn-action
+                                                            class="me-4"
+                                                            action="javascript: void(0);"
                                                             icon="trash"
-                                                            onclick="modalDeleteEvaluation('{{ $evaluation->id }}');" />
+                                                            onclick="modalDeleteEvaluation('{{ $evaluation->id }}');"
+                                                        />
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -339,18 +417,25 @@
                                                     <a href="{{ $course->link }}" target="_blank">
                                                         {{ $course->link }}
                                                     </a>
-                                                    <img class="copy-icon copy-classrom-link"
-                                                        src="{{ asset('images/icons/copy.svg') }}" />
+                                                    <img
+                                                        class="copy-icon copy-classrom-link"
+                                                        src="{{ asset('images/icons/copy.svg') }}"
+                                                    />
                                                 @endif
                                             </span>
                                         </div>
 
                                         <div class="col-12 col-md-2">
                                             <span class="sub-title">Professor:</span>
-                                            <img class="classroom-teacher-photo"
+                                            <img
+                                                class="classroom-teacher-photo"
                                                 src="{{ asset("storage/{$course->teacher?->profile_photo}") }}"
-                                                height="30" alt="User Profile Photo" data-toggle='tooltip'
-                                                data-placement='top' title='{{ $course->teacher?->name }}'>
+                                                height="30"
+                                                alt="User Profile Photo"
+                                                data-toggle='tooltip'
+                                                data-placement='top'
+                                                title='{{ $course->teacher?->name }}'
+                                            />
                                         </div>
                                     </div>
 
@@ -367,28 +452,52 @@
         </div>
     @endcan
 
-    <div class="modal fade" id="delete_evaluation_modal" data-bs-backdrop="static" data-bs-keyboard="false"
-        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div
+        class="modal fade"
+        id="delete_evaluation_modal"
+        data-bs-backdrop="static"
+        data-bs-keyboard="false"
+        tabindex="-1"
+        aria-labelledby="staticBackdropLabel"
+        aria-hidden="true"
+    >
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header pb-0">
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                    ></button>
                 </div>
                 <div class="modal-body py-0">
                     <div class="text-center">
                         <input type="hidden" id="evaluation_to_delete">
-                        <img src="{{ asset('images/icons/x-circle.svg') }}" alt="warning" class="my-2">
+                        <img
+                            src="{{ asset('images/icons/x-circle.svg') }}"
+                            alt="warning"
+                            class="my-2"
+                        />
                         <h3 class="my-3">Você tem certeza que <br> gostaria de excluir</h3>
                         <p id="delete_evaluation_modal_item"></p>
                     </div>
                 </div>
                 <div class="modal-footer d-flex justify-content-center">
-                    <button type="button" class="btn bg-secondary btn-shadow text-white modal-cancel-button"
-                        data-bs-dismiss="modal">
+                    <button
+                        type="button"
+                        class="btn bg-secondary btn-shadow text-white modal-cancel-button"
+                        data-bs-dismiss="modal"
+                    >
                         <span>Cancelar</span>
                     </button>
-                    <a id="delete_evaluation" type="button" onclick="deleteEvaluationConfirmed();"
-                        class="btn bg-danger btn-shadow text-white d-flex align-items-center justify-content-center modal-confirm-button">
+
+                    <a
+                        id="delete_evaluation"
+                        type="button"
+                        onclick="deleteEvaluationConfirmed();"
+                        class="btn bg-danger btn-shadow text-white d-flex align-items-center justify-content-center modal-confirm-button"
+                    >
                         <span>EXCLUIR</span>
                     </a>
                 </div>
@@ -399,4 +508,5 @@
 
 @section('extra-scripts')
     <script src="{{ asset('js/classrooms/show.js') }}?version={{ getAppVersion() }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 @endsection
